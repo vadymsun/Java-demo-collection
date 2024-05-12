@@ -19,11 +19,14 @@ public class HelloClient {
         @Override
         public void run() {
             try {
+                // 1. 指定服务ip和端口号，连接服务器获取socket
                 Socket socket = new Socket(ip, port);
 
+                // 获取输入输出流
                 InputStream inputStream = socket.getInputStream();
                 OutputStream outputStream = socket.getOutputStream();
 
+                // 3. 使用输入输出流及逆行数控v传输
                 outputStream.write(msg.getBytes());
                 socket.shutdownOutput();
 
@@ -33,8 +36,10 @@ public class HelloClient {
                 while ((len = inputStream.read(data)) != -1){
                     stringBuilder.append(new String(data, 0 , len));
                 }
-
                 System.out.println("服务器的消息是："+ stringBuilder);
+
+                // 关闭连接
+                socket.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
