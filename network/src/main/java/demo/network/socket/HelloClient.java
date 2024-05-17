@@ -25,7 +25,7 @@ public class HelloClient {
                 // 获取输入输出流
                 InputStream inputStream = socket.getInputStream();
                 OutputStream outputStream = socket.getOutputStream();
-
+                Thread.sleep(10000);
                 // 3. 使用输入输出流及逆行数控v传输
                 outputStream.write(msg.getBytes());
                 socket.shutdownOutput();
@@ -41,6 +41,8 @@ public class HelloClient {
                 // 关闭连接
                 socket.close();
             } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
